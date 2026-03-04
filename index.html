@@ -80,6 +80,51 @@
 </div>
 
 <script>
+  const display = document.getElementById("display");
+
+  function press(value) {
+    display.value += value;
+  }
+
+  function clearDisplay() {
+    display.value = "";
+  }
+
+  function calculate() {
+    try {
+      display.value = eval(display.value);
+    } catch {
+      display.value = "Error";
+    }
+  }
+
+  // ✅ Keyboard Support
+  document.addEventListener("keydown", function(event) {
+
+    // Numbers and operators
+    if (
+      (event.key >= "0" && event.key <= "9") ||
+      ["+", "-", "*", "/", "."].includes(event.key)
+    ) {
+      display.value += event.key;
+    }
+
+    // Enter key = calculate
+    if (event.key === "Enter") {
+      calculate();
+    }
+
+    // Backspace = delete last character
+    if (event.key === "Backspace") {
+      display.value = display.value.slice(0, -1);
+    }
+
+    // Escape = clear
+    if (event.key === "Escape") {
+      clearDisplay();
+    }
+  });
+
   function press(value) {
     document.getElementById("display").value += value;
   }
