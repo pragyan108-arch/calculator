@@ -146,6 +146,156 @@ button:hover { background:#555; }
 
 </div>
 
+  <!-- ================= HELP SECTION ================= -->
+
+<section class="help-section">
+  <h2>📘 Calculator Help Guide</h2>
+
+  <input type="text" id="helpSearch" placeholder="Search help..." onkeyup="filterHelp()">
+
+  <div class="accordion">
+
+    <div class="accordion-item">
+      <button class="accordion-btn">Basic Operations</button>
+      <div class="accordion-content">
+        <p><b>0–9</b> → Enter numbers</p>
+        <p><b>+ − × ÷</b> → Addition, Subtraction, Multiplication, Division</p>
+        <p><b>=</b> → Show result</p>
+        <p><b>C</b> → Clear screen</p>
+        <p><b>←</b> → Delete last character</p>
+        <p><b>.</b> → Decimal point</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn">Advanced Functions</button>
+      <div class="accordion-content">
+        <p><b>x²</b> → Square of number</p>
+        <p><b>xʸ</b> → Power function</p>
+        <p><b>√x</b> → Square root</p>
+        <p><b>1/x</b> → Reciprocal</p>
+        <p><b>( )</b> → Parentheses grouping</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn">Scientific Functions</button>
+      <div class="accordion-content">
+        <p><b>sin, cos, tan</b> → Trigonometric functions</p>
+        <p><b>DEG/RAD</b> → Switch angle mode</p>
+        <p><b>log</b> → Base 10 logarithm</p>
+        <p><b>ln</b> → Natural logarithm</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn">Keyboard Shortcuts</button>
+      <div class="accordion-content">
+        <p><b>Enter</b> → Calculate</p>
+        <p><b>Backspace</b> → Delete last character</p>
+        <p><b>Escape</b> → Clear screen</p>
+        <p>Numbers & operators can be typed directly</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn">History & Errors</button>
+      <div class="accordion-content">
+        <p>History panel stores previous calculations.</p>
+        <p>If expression is invalid, calculator shows <b>Error</b>.</p>
+        <p>Check parentheses and operators if error appears.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.help-section {
+  max-width:900px;
+  margin:60px auto;
+  padding:25px;
+  background:#ffffff;
+  border-radius:15px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.1);
+  font-family:Arial;
+}
+
+.help-section h2 {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+#helpSearch {
+  width:100%;
+  padding:10px;
+  margin-bottom:20px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+.accordion-item {
+  margin-bottom:10px;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid #ddd;
+}
+
+.accordion-btn {
+  width:100%;
+  padding:12px;
+  text-align:left;
+  background:#2a5298;
+  color:white;
+  border:none;
+  cursor:pointer;
+  font-size:15px;
+  transition:0.3s;
+}
+
+.accordion-btn:hover {
+  background:#1e3c72;
+}
+
+.accordion-content {
+  max-height:0;
+  overflow:hidden;
+  background:#f9f9f9;
+  padding:0 12px;
+  transition:max-height 0.4s ease, padding 0.3s ease;
+}
+
+.accordion-content p {
+  margin:10px 0;
+}
+
+.accordion-item.active .accordion-content {
+  max-height:300px;
+  padding:10px 12px;
+}
+</style>
+
+<script>
+// Accordion Animation
+document.querySelectorAll(".accordion-btn").forEach(button=>{
+  button.addEventListener("click",function(){
+    this.parentElement.classList.toggle("active");
+  });
+});
+
+// Search Filter
+function filterHelp() {
+  let input = document.getElementById("helpSearch").value.toLowerCase();
+  let items = document.querySelectorAll(".accordion-item");
+
+  items.forEach(item=>{
+    let text = item.innerText.toLowerCase();
+    item.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+</script>
+
 <script>
 let display = document.getElementById("display");
 let expression = document.getElementById("expression");
