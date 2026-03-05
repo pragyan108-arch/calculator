@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="google-site-verification" content="iFSfhJ5KDj0PUe7Mq4diVlaPLJexcf_rSpqCxFrhI_I" />
-  <title>Pragyan Calculator</title>
-  <meta name="description" content="Free Online Calculator made by Pragyan Sharma">
-  <meta name="keywords" content="online calculator, free calculator, simple calculator">
-  <meta name="author" content="Pragyan Sharma">
-
+  <title>Advanced Scientific Calculator</title>
   <style>
     body {
-      background: #1e1e1e;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -18,76 +13,122 @@
     }
 
     .calculator {
-      background: #2b2b2b;
+      background: #111;
       padding: 20px;
       border-radius: 15px;
-      width: 300px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      width: 360px;
     }
 
-    input {
+    #display {
       width: 100%;
       height: 60px;
       font-size: 22px;
-      text-align: right;
       margin-bottom: 15px;
-      border: none;
+      padding: 10px;
       border-radius: 10px;
-      padding-right: 10px;
+      border: none;
+      text-align: right;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
     }
 
     button {
-      width: 22%;
-      height: 50px;
-      margin: 5px;
-      font-size: 18px;
-      border: none;
+      padding: 15px;
+      font-size: 16px;
       border-radius: 10px;
+      border: none;
       cursor: pointer;
+      background: #333;
+      color: white;
+      transition: 0.2s;
     }
 
-    .operator { background: orange; color: white; }
-    .equal { background: green; color: white; }
-    .clear { background: red; color: white; }
+    button:hover {
+      background: #555;
+    }
+
+    .operator {
+      background: #ff9500;
+    }
+
+    .operator:hover {
+      background: #e08900;
+    }
+
+    .equal {
+      background: #28a745;
+      grid-column: span 2;
+    }
+
+    .equal:hover {
+      background: #1e7e34;
+    }
+
+    .clear {
+      background: red;
+    }
   </style>
 </head>
-
 <body>
 
 <div class="calculator">
-  <input type="text" id="display" disabled>
+  <input type="text" id="display" readonly>
 
-  <div>
-    <button onclick="press('7')">7</button>
-    <button onclick="press('8')">8</button>
-    <button onclick="press('9')">9</button>
-    <button class="operator" onclick="press('/')">/</button>
+  <div class="buttons">
+    <button onclick="append('Math.sin(')">sin</button>
+    <button onclick="append('Math.cos(')">cos</button>
+    <button onclick="append('Math.tan(')">tan</button>
+    <button onclick="append('Math.log10(')">log</button>
+    <button onclick="append('Math.log(')">ln</button>
 
-    <button onclick="press('4')">4</button>
-    <button onclick="press('5')">5</button>
-    <button onclick="press('6')">6</button>
-    <button class="operator" onclick="press('*')">*</button>
+    <button onclick="append('Math.sqrt(')">√</button>
+    <button onclick="append('**2')">x²</button>
+    <button onclick="append('**')">xʸ</button>
+    <button onclick="append('(')">(</button>
+    <button onclick="append(')')">)</button>
 
-    <button onclick="press('1')">1</button>
-    <button onclick="press('2')">2</button>
-    <button onclick="press('3')">3</button>
-    <button class="operator" onclick="press('-')">-</button>
-
+    <button onclick="append('7')">7</button>
+    <button onclick="append('8')">8</button>
+    <button onclick="append('9')">9</button>
+    <button class="operator" onclick="append('/')">÷</button>
     <button class="clear" onclick="clearDisplay()">C</button>
-    <button onclick="press('0')">0</button>
+
+    <button onclick="append('4')">4</button>
+    <button onclick="append('5')">5</button>
+    <button onclick="append('6')">6</button>
+    <button class="operator" onclick="append('*')">×</button>
+    <button onclick="backspace()">←</button>
+
+    <button onclick="append('1')">1</button>
+    <button onclick="append('2')">2</button>
+    <button onclick="append('3')">3</button>
+    <button class="operator" onclick="append('-')">−</button>
+    <button onclick="append('.')">.</button>
+
+    <button onclick="append('0')">0</button>
+    <button class="operator" onclick="append('+')">+</button>
     <button class="equal" onclick="calculate()">=</button>
-    <button class="operator" onclick="press('+')">+</button>
   </div>
 </div>
 
 <script>
   const display = document.getElementById("display");
 
-  function press(value) {
+  function append(value) {
     display.value += value;
   }
 
   function clearDisplay() {
     display.value = "";
+  }
+
+  function backspace() {
+    display.value = display.value.slice(0, -1);
   }
 
   function calculate() {
@@ -98,49 +139,21 @@
     }
   }
 
-  // ✅ Keyboard Support
+  // Keyboard Support
   document.addEventListener("keydown", function(event) {
-
-    // Numbers and operators
-    if (
-      (event.key >= "0" && event.key <= "9") ||
-      ["+", "-", "*", "/", "."].includes(event.key)
-    ) {
-      display.value += event.key;
+    if (!isNaN(event.key) || "+-*/().".includes(event.key)) {
+      append(event.key);
     }
-
-    // Enter key = calculate
     if (event.key === "Enter") {
       calculate();
     }
-
-    // Backspace = delete last character
     if (event.key === "Backspace") {
-      display.value = display.value.slice(0, -1);
+      backspace();
     }
-
-    // Escape = clear
     if (event.key === "Escape") {
       clearDisplay();
     }
   });
-
-  function press(value) {
-    document.getElementById("display").value += value;
-  }
-
-  function clearDisplay() {
-    document.getElementById("display").value = "";
-  }
-
-  function calculate() {
-    try {
-      document.getElementById("display").value =
-        eval(document.getElementById("display").value);
-    } catch {
-      document.getElementById("display").value = "Error";
-    }
-  }
 </script>
 
 </body>
